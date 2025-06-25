@@ -19,3 +19,13 @@ class ReadConfig():
     def getPassword():
         password=config.get('login data','password')
         return password
+
+    @staticmethod
+    def getInvalidUsername():
+        username=config.get('invalid login data', 'username')
+        return  username
+
+    @staticmethod
+    def getInvalidPassword():
+        password=config.get('invalid login data','password')
+        return password
