@@ -15,6 +15,11 @@ class Test_001_PurchaseItem:
     password = ReadConfig.getPassword()
 
     @pytest.mark.sanity
+    @allure.severity(allure.severity_level.MINOR)
+    def test_print(self):
+        print("Success")
+
+    @pytest.mark.sanity
     @allure.severity(allure.severity_level.CRITICAL)
     def test_parchaseItems(self, setup):
         self.driver = setup
