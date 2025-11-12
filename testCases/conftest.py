@@ -13,20 +13,16 @@ from webdriver_manager.microsoft import EdgeChromiumDriverManager
 @pytest.fixture()
 def setup(browser):
     if browser == 'chrome':
-        options = ChromeOptions()
-        service = ChromeService(ChromeDriverManager().install())
-        driver = webdriver.Chrome(service=service, options=options)
-        print("Chrome Browser Launched")
-    elif browser == 'firefox':
-        options = FirefoxOptions()
-        service = FirefoxService(GeckoDriverManager().install())
-        driver = webdriver.Firefox(service=service, options=options)
-        print("Firefox Browser Launched")
+        driver = webdriver.Chrome()
+
+    elif browser.lower() == 'edge':
+        driver = webdriver.Edge()
+
+    elif browser.lower() == 'firefox':
+        driver = webdriver.Firefox()
+
     else:
-        options = EdgeOptions()
-        service = EdgeService(EdgeChromiumDriverManager().install())
-        driver = webdriver.Edge(service=service, options=options)
-        print("Edge Browser Launched")
+        driver = webdriver.Safari()
 
     return driver
 
