@@ -4,6 +4,8 @@ from allure_commons.types import AttachmentType
 from selenium.webdriver.common.by import By
 
 from pageObjects.cartPage import CartPage
+from pageObjects.checkoutInformationPage import CheckoutInformationPage
+from pageObjects.checkoutOverviewPage import CheckoutOverviewPage
 from pageObjects.homePage import HomePage
 from pageObjects.loginPage import LoginPage
 from utilities.readProperties import ReadConfig
@@ -13,11 +15,14 @@ class Test_001_PurchaseItem:
     baseURL = ReadConfig.getBaseURL()
     username = ReadConfig.getUsername()
     password = ReadConfig.getPassword()
+    firstname = ReadConfig.getFirstname()
+    lastname = ReadConfig.getLastname()
+    postalcode = ReadConfig.getPostalCode()
 
     @pytest.mark.sanity
     @allure.severity(allure.severity_level.MINOR)
     def test_print(self):
-        print("Success")
+        print("Success is wonderfull at times")
 
     @pytest.mark.sanity
     @allure.severity(allure.severity_level.CRITICAL)
@@ -30,6 +35,9 @@ class Test_001_PurchaseItem:
         self.lp = LoginPage(self.driver)
         self.hp = HomePage(self.driver)
         self.cp = CartPage(self.driver)
+        self.cip = CheckoutInformationPage(self.driver)
+        self.cop = CheckoutOverviewPage(self.driver)
+
         self.lp.enterUsername(self.username)
         self.lp.enterPassword(self.password)
         self.lp.clickLoginButton()
@@ -61,5 +69,33 @@ class Test_001_PurchaseItem:
             assert False
 
         self.cp.clickCheckoutButton()
+
+        checkoutInformationPageVerification = self.driver.find_element(By.XPATH,self.cip.pageTitle_xpath).text
+
+        if checkoutInformationPageVerification=="Checkout: Your Information":
+            allure.attach(self.driver.get_screenshot_as_png(),name="Checkout Information Page",attachment_type=AttachmentType.PNG)
+            assert True
+        else:
+            assert False
+
+        self.cip.enterFirstName(self.firstname)
+
+        self.cip.enterLastName(self.lastname)
+
+        self.cip.enterPostalCode(self.postalcode)
+
+        self.cip.clickContinueButton()
+
+        checkoutoverviewPageVerification = self.driver.find_element(By.XPATH,self.cop.pageTitle_xpath).text
+
+        if checkoutoverviewPageVerification=="Checkout: Overview":
+            allure.attach(self.driver.get_screenshot_as_png(),name="Checkout Overview Page",attachment_type=AttachmentType.PNG)
+            assert True
+        else:
+            assert False
+
+        self.cop.clickFinishButton()
+
+        allure.attach(self.driver.get_screenshot_as_png(), name="Checkout Complete Page", attachment_type=AttachmentType.PNG)
 
         self.driver.quit()

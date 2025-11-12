@@ -29,3 +29,18 @@ class ReadConfig():
     def getInvalidPassword():
         password=config.get('invalid login data','password')
         return password
+
+    @staticmethod
+    def getFirstname():
+        firstname = config.get('checkout information', 'firstname')
+        return firstname
+
+    @staticmethod
+    def getLastname():
+        lastname = config.get('checkout information', 'lastname')
+        return lastname
+
+    @staticmethod
+    def getPostalCode():
+        postalcode = config.get('checkout information', 'postalcode')
+        return postalcode
