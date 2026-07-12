@@ -45,7 +45,12 @@ def setup(browser):
     driver.quit()
 
 def pytest_addoption(parser):
-    parser.addoption("--browser")
+    parser.addoption(
+        "--browser",
+        action="store",
+        default="edge",
+        help="Browser to run the tests"
+    )
 
 @pytest.fixture()
 def browser(request):
