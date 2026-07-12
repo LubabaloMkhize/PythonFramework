@@ -15,6 +15,10 @@ jobs:
 
     runs-on: ubuntu-latest
 
+    env:
+      BROWSER: edge
+      TEST_ENV: QA
+
     steps:
 
       - name: Checkout Repository
@@ -42,14 +46,12 @@ jobs:
           name: allure-results
           path: allure-results
 
-      - name: Upload Allure Report
-        uses: actions/upload-artifact@v4
-        with:
-          name: Allure-Report
-          path: allure-report/
+      - name: Generate PDF Summary
+        run: |
+          python utilities/generate_pdf_report.py
 
-      - name: Upload PDF Summary
+      - name: Upload PDF Report
         uses: actions/upload-artifact@v4
         with:
-          name: Test-Summary-PDF
+          name: Test-Execution-PDF
           path: reports/TestExecutionReport.pdf
