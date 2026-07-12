@@ -28,7 +28,15 @@ def setup(browser):
         driver = webdriver.Chrome(options=options)
 
     elif browser == "edge":
-        driver = webdriver.Edge()
+        options = EdgeOptions()
+
+        if os.getenv("GITHUB_ACTIONS") == "true":
+            options.add_argument("--headless=new")
+            options.add_argument("--no-sandbox")
+            options.add_argument("--disable-dev-shm-usage")
+            options.add_argument("--window-size=1920,1080")
+
+        driver = webdriver.Edge(options=options)
 
     elif browser == "firefox":
         driver = webdriver.Firefox()
