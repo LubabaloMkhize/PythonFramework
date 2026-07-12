@@ -1,6 +1,8 @@
+import os
+
 import pytest
 from selenium import webdriver
-from selenium.webdriver.chrome.options import Options as ChromeOptions
+from selenium.webdriver.chrome.options import Options as ChromeOptions, Options
 from selenium.webdriver.firefox.options import Options as FirefoxOptions
 from selenium.webdriver.edge.options import Options as EdgeOptions
 from selenium.webdriver.chrome.service import Service as ChromeService
@@ -14,7 +16,16 @@ def setup(browser):
     browser = browser.lower()
 
     if browser == "chrome":
-        driver = webdriver.Chrome()
+        options = Options()
+
+        # Enable these only in GitHub Actions
+        if os.getenv("GITHUB_ACTIONS") == "true":
+            options.add_argument("--headless=new")
+            options.add_argument("--no-sandbox")
+            options.add_argument("--disable-dev-shm-usage")
+            options.add_argument("--window-size=1920,1080")
+
+        driver = webdriver.Chrome(options=options)
 
     elif browser == "edge":
         driver = webdriver.Edge()
