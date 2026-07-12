@@ -10,19 +10,28 @@ from selenium.webdriver.edge.service import Service as EdgeService
 
 @pytest.fixture()
 def setup(browser):
-    if browser == 'chrome':
+
+    browser = browser.lower()
+
+    if browser == "chrome":
         driver = webdriver.Chrome()
 
-    elif browser.lower() == 'edge':
+    elif browser == "edge":
         driver = webdriver.Edge()
 
-    elif browser.lower() == 'firefox':
+    elif browser == "firefox":
         driver = webdriver.Firefox()
 
-    else:
+    elif browser == "safari":
         driver = webdriver.Safari()
 
-    return driver
+    else:
+        raise ValueError(f"Unsupported browser: {browser}")
+
+
+    yield driver
+
+    driver.quit()
 
 def pytest_addoption(parser):
     parser.addoption("--browser")
