@@ -12,6 +12,9 @@ class Test_001_LoginWithInvalidCredentials:
     username = ReadConfig.getInvalidUsername()
     password = ReadConfig.getInvalidPassword()
 
+    @allure.parent_suite("Sanity")
+    @allure.suite("Login")
+    @allure.sub_suite("inValid Login")
     @pytest.mark.sanity
     @allure.severity(allure.severity_level.CRITICAL)
     def test_login(self, setup):
