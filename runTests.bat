@@ -1,1 +1,1 @@
-pytest -s -v -m"sanity" --alluredir="allure-results" --browser edge
+pytest -s -v -m"sanity" --alluredir="allure-results" --browser firefox

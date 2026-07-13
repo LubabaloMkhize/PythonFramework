@@ -9,6 +9,11 @@ on:
     branches:
       - main
 
+  workflow_dispatch:
+
+    schedule:
+      - cron: "0 2 * * *"
+
 jobs:
 
   selenium-tests:
